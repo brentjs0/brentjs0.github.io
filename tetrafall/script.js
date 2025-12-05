@@ -1,11 +1,18 @@
-
 async function go()
 {
     const screenCanvas = document.getElementById('screen');
-    if (!(screenCanvas instanceof HTMLCanvasElement))
+    const textboxInput = document.getElementById('textbox');
+    if (!(screenCanvas instanceof HTMLCanvasElement) ||
+        !(textboxInput instanceof HTMLInputElement))
     {
         throw new Error('Required elements missing from screen.');
     }
+
+    textboxInput.value = localStorage.getItem('textboxInputValue') ?? '';
+    textboxInput.addEventListener('change', function (event)
+    {
+        localStorage.setItem('textboxInputValue', this.value);
+    });
 
     const ctx = screenCanvas.getContext('2d');
     if (ctx === null)
